@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const Portfolio = require('../models/Portfolio')
-
+//Get All
 router.get('/', async (req, res) => {
 
     try{
@@ -16,10 +16,26 @@ router.get('/', async (req, res) => {
             message: err
         })
     }
-
-
 })
+//Get One
+router.get('/:slug', async (req, res) => {
 
+    try{
+        const portfolio = await Portfolio.findOne({
+            slug: req.params.slug
+        })
+        res.json({
+            success: true,
+            data: portfolio
+        })
+    }catch(err){
+        res.json({
+            success: false,
+            message: err
+        })
+    }
+})
+//Create
 router.post('/', async (req, res) => {
     const portfolio = new Portfolio({
         title: req.body.title,
@@ -54,5 +70,9 @@ router.post('/', async (req, res) => {
     //             })
     //         })
 })
+
+//Update
+
+//Delete
 
 module.exports = router
