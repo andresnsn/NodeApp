@@ -55,6 +55,55 @@ router.post('/', async (req, res) => {
         })
     }
 
+
+})
+
+//Update
+router.patch('/:slug', async(req, res) => {
+    try{
+        const updatedPortfolio = await Portfolio.updateOne({
+            slug: req.params.slug
+        },
+        {
+            title: req.body.title,
+            description: req.body.description
+        })
+        res.json({
+            success: true,
+            updated: updatedPortfolio.nModified
+        })
+    }catch(err){
+        res.json({
+            success: false,
+            message: err
+        })
+    }
+})
+//Delete
+
+router.delete('/:slug', async (req, res) => {
+    try{
+        const deletedPortfolio = await Portfolio.deleteOne({
+            slug: req.params.slug
+        })
+        res.json({
+            success: true,
+            deleted: deletedPortfolio.deletedCount
+        })
+
+    }catch(err){
+        res.json({
+            success: false,
+            message: err
+        })
+    }
+
+
+
+})
+
+module.exports = router
+
     // portfolio
     //         .save()
     //         .then((data) => {
@@ -69,10 +118,3 @@ router.post('/', async (req, res) => {
     //                 message: err
     //             })
     //         })
-})
-
-//Update
-
-//Delete
-
-module.exports = router
