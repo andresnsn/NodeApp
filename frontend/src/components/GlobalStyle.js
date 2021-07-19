@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 
+
 const GlobalStyle = createGlobalStyle`
     *{
         margin: 0;
@@ -24,6 +25,7 @@ const GlobalStyle = createGlobalStyle`
             background-color: #23d997;
             color: white;
         }
+    }
     h2{
         font-weight: lighter;
         font-size: 4rem;
@@ -45,10 +47,10 @@ const GlobalStyle = createGlobalStyle`
     }
     p{
         padding: 3rem 0rem;
-        color: yellow;
+        color: #ccc;
         font-size: 1.4rem;
         line-height: 150%;
     }
-}`
+`
 
 export default GlobalStyle;

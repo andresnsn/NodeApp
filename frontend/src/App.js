@@ -4,11 +4,18 @@ import GlobalStyle from './components/GlobalStyle';
 
 import AboutUs from './pages/AboutUs'
 
+import { BrowserRouter, Route } from 'react-router-dom'
+
 function App() {
   return (
     <div>
       <GlobalStyle/>
-      <AboutUs/>
+      <BrowserRouter>
+        <Route path = "/">
+          <AboutUs/>
+        </Route>
+      </BrowserRouter>
+      
     </div>
   );
 }
