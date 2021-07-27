@@ -1,9 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useApi } from '../hooks/useApi'
 
 const Card = () => {
+    const { data } = useApi('/portfolio')
     return(
         <>
+        {data && JSON.stringify(data)}
             <StyledCard>
                 <Content>
                     <Image src="https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"/>
