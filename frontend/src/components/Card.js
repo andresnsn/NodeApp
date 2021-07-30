@@ -1,15 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
+import Moment from 'react-moment'
 
 const Card = ({project}) => {
     return(
         
             <StyledCard>
                 <Content>
-                    <Image src="https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"/>
+                    <Image src={project.image}/>
                     <Info>
                         <h3>{project.title}</h3> 
-                        <h4>{project.createdAt}</h4>
+                        <h4><Moment format = 'MMMM/YYYY'>{project.createdAt}</Moment></h4>
                         <p>{project.description}</p>
                     </Info>
                 </Content>
@@ -18,14 +19,14 @@ const Card = ({project}) => {
 }
 
 const StyledCard = styled.div`
-    background-color: green;
+    background-color: #1b1b1b;
     min-height: 30vh;
     border-color: #416CD5;
     text-align: center;
-    border-radius: 1rem;
+    border-radius: 1.5rem;
     cursor: pointer;
     overflow: hidden;
-`
+    box-shadow: 0.01em 0.1em 1em 0.1em #fc3f93;`
 
 const Content = styled.div`
     display: flex;

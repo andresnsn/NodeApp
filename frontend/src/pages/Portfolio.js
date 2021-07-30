@@ -8,12 +8,11 @@ const Portfolio = () => {
 
     const { data } = useApi('/portfolio')
 
-
     return(
         <PortfolioList>
             <CardList>
                 {data?.data?.map(project => {
-                    return <Card project = {project}/>
+                    return <Card key={project.slug} project = {project}/>
                 })}
             </CardList>
         </PortfolioList>

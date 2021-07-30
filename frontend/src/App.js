@@ -8,6 +8,7 @@ import AboutUs from './pages/AboutUs'
 import Portfolio from './pages/Portfolio'
 import ContactMe from './pages/ContactMe'
 import Nav from './components/Nav'
+import PortfolioDetail from './components/PortfolioDetail'
 
 function App() {
   return (
@@ -18,8 +19,11 @@ function App() {
         <Route exact path = "/">
           <AboutUs/>
         </Route>
-        <Route path = "/portfolio">
+        <Route path = "/portfolio" exact>
           <Portfolio/>
+        </Route>
+        <Route path = "/portfolio/:id">
+          <PortfolioDetail/>
         </Route>
         <Route path = "/contact">
           <ContactMe/>
