@@ -1,34 +1,39 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useParams } from 'react-router-dom'
+import { useApi } from '../hooks/useApi'
 
 const PortfolioDetail = () =>{
+
+    const {slug} = useParams()
+    const {data} = useApi(`/portfolio/${slug}`)
+
     return(
         <Detail>
             <Stats>
                 <div>
                     <Title>Title</Title>
                     <ShortDescription>
-                        <p>Short Description</p>
+                        <p>{data?.data?.description}</p>
                     </ShortDescription>
                 </div>
                 <Info>
                     <h3>Technologies</h3>
                     <Technologies>
-                        <Technology>
-                            <FontAwesomeIcon icon = {["fab", "react"]} size="4x"/> React
-                        </Technology>
-                        <Technology>
-                            <FontAwesomeIcon icon = {["fab", "node-js"]} size="4x"/> Node
-                        </Technology>
-                        <Technology>
-                            <FontAwesomeIcon icon = {["fas", "database"]} size="4x"/> MongoDB
-                        </Technology>
+                        {data?.data?.technologies.map(tech => {
+                            return(
+                                <Technology key={tech.icon}>
+                                    <FontAwesomeIcon icon = {[tech.iconType, tech.icon]} size="4x"/> {tech.label}
+                                </Technology>
+                            )
+                        })}
+
                     </Technologies>
                 </Info>
             </Stats>
             <Description>
-                <p>Long Description</p>
+                <p>{data?.data?.longDescription}</p>
             </Description>
             <img src="https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"></img>
         </Detail>

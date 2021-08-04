@@ -29,7 +29,7 @@ function App() {
         <Route path = "/portfolio" exact>
           <Portfolio/>
         </Route>
-        <Route path = "/portfolio/:id">
+        <Route path = "/portfolio/:slug">
           <PortfolioDetail/>
         </Route>
         <Route path = "/contact">
