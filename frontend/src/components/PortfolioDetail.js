@@ -1,42 +1,51 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useParams } from 'react-router-dom'
 import { useApi } from '../hooks/useApi'
+import {useHistory} from 'react-router-dom'
 
-const PortfolioDetail = () =>{
-
-    const {slug} = useParams()
+const PortfolioDetail = ({slug}) =>{
+    const history = useHistory()
     const {data} = useApi(`/portfolio/${slug}`)
 
-    return(
-        <Detail>
-            <Stats>
-                <div>
-                    <Title>Title</Title>
-                    <ShortDescription>
-                        <p>{data?.data?.description}</p>
-                    </ShortDescription>
-                </div>
-                <Info>
-                    <h3>Technologies</h3>
-                    <Technologies>
-                        {data?.data?.technologies.map(tech => {
-                            return(
-                                <Technology key={tech.icon}>
-                                    <FontAwesomeIcon icon = {[tech.iconType, tech.icon]} size="4x"/> {tech.label}
-                                </Technology>
-                            )
-                        })}
+    const exitDetailHandler = (click) => {
+        const element = click.target
+        if(element.classList.contains('shadow')){
+            document.body.style.overflow = 'auto'
+            history.push('/portfolio')
+        }
+    }
 
-                    </Technologies>
-                </Info>
-            </Stats>
-            <Description>
-                <p>{data?.data?.longDescription}</p>
-            </Description>
-            <img src="https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"></img>
-        </Detail>
+    return(
+        <CardShadow className="shadow" onClick={exitDetailHandler}>
+            <Detail>
+                <Stats>
+                    <div>
+                        <Title>Title</Title>
+                        <ShortDescription>
+                            <p>{data?.data?.description}</p>
+                        </ShortDescription>
+                    </div>
+                    <Info>
+                        <h3>Technologies</h3>
+                        <Technologies>
+                            {data?.data?.technologies.map(tech => {
+                                return(
+                                    <Technology key={tech.icon}>
+                                        <FontAwesomeIcon icon = {[tech.iconType, tech.icon]} size="4x"/> {tech.label}
+                                    </Technology>
+                                )
+                            })}
+
+                        </Technologies>
+                    </Info>
+                </Stats>
+                <Description>
+                    <p>{data?.data?.longDescription}</p>
+                </Description>
+                <img src="https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"></img>
+            </Detail>
+        </CardShadow>
     )
 }
 const Detail = styled.div`
@@ -100,6 +109,26 @@ const Info = styled.div`
     min-width: 300px;
     h3{
         color: #696969;
+    }
+`
+
+const CardShadow = styled.div`
+    width: 100%;
+    min-height: 100vh;
+    overflow-y: scroll;
+    background: rgba(0,0,0,0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    &::-webkit-scrollbar{
+        width: 0.5rem;
+    }
+    &::-webkit-scrollbar-thumb{
+        background-color: #ff7676;
+    }
+    &::-webkit-scrollbar-track{
+        background: white;
     }
 `
 

@@ -8,7 +8,6 @@ import AboutUs from './pages/AboutUs'
 import Portfolio from './pages/Portfolio'
 import ContactMe from './pages/ContactMe'
 import Nav from './components/Nav'
-import PortfolioDetail from './components/PortfolioDetail'
 //Icons
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
@@ -26,11 +25,8 @@ function App() {
         <Route exact path = "/">
           <AboutUs/>
         </Route>
-        <Route path = "/portfolio" exact>
+        <Route path = {['/portfolio:id', '/portfolio']}>
           <Portfolio/>
-        </Route>
-        <Route path = "/portfolio/:slug">
-          <PortfolioDetail/>
         </Route>
         <Route path = "/contact">
           <ContactMe/>
