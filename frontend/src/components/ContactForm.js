@@ -1,14 +1,20 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import moment from 'moment'
-import {save} from '../services/sheet'
+import {save} from '../services/Sheet'
 
 const ContactForm = () => {
     const [ name, setName ] = useState('')
     const [ email, setEmail ] = useState('')
     const [ message, setMessage ] = useState('')
-    const [ success, setSuccess ] = useState('')
-    const [ error, setError ] = useState('')
+    const [ success, setSuccess ] = useState(false)
+    const [error, setError ] = useState(false)
+
+    const resetForm = () => {
+        setName('')
+        setEmail('')
+        setMessage('')
+    }
 
     const contactMeHandler = async (e) => {
 
@@ -23,8 +29,16 @@ const ContactForm = () => {
 
         const result = await save(data)
 
-        setSuccess(result)
-        setError(result)
+        if (result) {
+            setSuccess(result)
+            resetForm()
+        }else{
+            setError(!result)
+        }
+
+        
+        
+
     }
 
     return(
@@ -42,8 +56,8 @@ const ContactForm = () => {
                 <textarea rows='5' value={message} onChange={(e) => setMessage(e.target.value)}/>
             </Input>
             <button type="submit">Submit</button>
-             {success && <h4>Mensagem enviada com sucesso!</h4>}
-            {error && <h4>Ocorreu um erro. Por favor, envie novamente.</h4>}
+             {success && <h4>Mensagem enviada com sucesso!</h4>} 
+             {error && <h4>Ocorreu um erro. Por favor, envie novamente.</h4>}
         </Form>
         
     )
