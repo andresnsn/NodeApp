@@ -1,12 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
-
 import SocialNetworkSection from '../components/SocialNetworkSection'
-import ContactForm from '../components/ContactForm' 
+import ContactForm from '../components/ContactForm'
+import { motion } from 'framer-motion'
+import { pageAnimation } from '../animation'
 
 const ContactMe = () => {
     return(
-        <ContactStyled>
+        <ContactStyled
+            exit='exit'
+            initial='hidden'
+            animate='show'
+            variants={pageAnimation}
+        >
             <Title>
                 <h2>Get in touch</h2>
             </Title>
@@ -18,7 +24,7 @@ const ContactMe = () => {
     )
 }
 
-const ContactStyled = styled.div`
+const ContactStyled = styled(motion.div)`
     padding: 1rem 10rem;
     color: #353535;
     min-height: 90vh;

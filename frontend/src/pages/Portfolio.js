@@ -4,6 +4,9 @@ import Card from '../components/Card'
 import { useApi } from '../hooks/useApi'
 import PortfolioDetail from '../components/PortfolioDetail'
 import {useLocation} from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { pageAnimation } from '../animation'
+import ScrollTop from '../components/ScrollTop'
 
 const Portfolio = () => {
     const location = useLocation()
@@ -11,19 +14,26 @@ const Portfolio = () => {
     const { data } = useApi('/portfolio')
 
     return(
-        <PortfolioList>
-
+        <PortfolioList
+            exit='exit'
+            initial='hidden'
+            animate='show'
+            variants={pageAnimation}
+        >
             {slug && <PortfolioDetail slug={slug}/>}
             <CardList>
                 {data?.data?.map(project => {
                     return <Card key={project.slug} project = {project}/>
                 })}
             </CardList>
+            <ScrollTop/>
         </PortfolioList>
     )
 }
 
-const PortfolioList = styled.div`
+
+
+const PortfolioList = styled(motion.div)`
     min-height: 90vh;
     overflow: hidden;
     padding: 5rem 10rem;

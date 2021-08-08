@@ -35,10 +35,6 @@ const ContactForm = () => {
         }else{
             setError(!result)
         }
-
-        
-        
-
     }
 
     return(
