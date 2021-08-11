@@ -1,8 +1,39 @@
-import React from 'react'
-import { Table, Button, Image } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Table, Button, Image, Modal } from 'react-bootstrap'
 import styled from 'styled-components'
+import { useApi } from '../../hooks/useApi'
+import moment from 'moment'
+import Dialog from './Dialog'
 
 const PortfolioList = () => {
+    const [action, setAction] = useState({
+        del: {
+            header: 'Confirm delete?',
+            btnVariant: 'danger',
+            btnLabel: 'Confirm'
+        },
+        edit: {
+            header: 'Edit portfolio',
+            btnVariant: 'primary',
+            btnLabel: 'Save'
+        },
+        add: {
+            header: 'Add new portfolio',
+            btnVariant: 'primary',
+            btnLabel: 'Save'
+        }
+    })
+    const [currentAction, setCurrentAction] = useState({
+        header: '',
+        btnVariant: '',
+        btnLabel: ''
+    })
+    const [show, setShow] = useState(false)
+    const { data } = useApi('/portfolio')
+    const handleShow = (slug, actn) => {
+        setCurrentAction(actn)
+        setShow(true)
+    }
     return (
         <div>
             <Table striped bordered hover variant="dark">
@@ -15,35 +46,24 @@ const PortfolioList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><Logo src="https://images.pexels.com/photos/1342460/pexels-photo-1342460.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" thumbnail /></td>
-                        <td>Título 1</td>
-                        <td>Otto</td>
-                        <td>
-                            <Button variant="info">Edit</Button>
-                            <Button variant="danger">Delete</Button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Título 2</td>
-                        <td>Thornton</td>
-                        <td>
-                            <Button variant="info">Edit</Button>
-                            <Button variant="danger">Delete</Button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Título 3</td>
-                        <td>@twitter</td>
-                        <td>
-                            <Button variant="info">Edit</Button>
-                            <Button variant="danger">Delete</Button>
-                        </td>
-                    </tr>
+                    { data?.data?.map(item => {
+                        return(
+                            <tr>
+                            <td><Logo src={item.image} thumbnail /></td>
+                            <td>{item.title}</td>
+                            <td>{moment(item.createdAt).format('MMM-YYYY')}</td>
+                            <td>
+                                <Button variant="info">Edit</Button>
+                                <Button variant="danger" onClick={() => handleShow(item.slug, action.del)}>Delete</Button>
+                            </td>
+                        </tr>
+                        )
+                    })}
                 </tbody>
             </Table>
+            <Dialog show={show} setShow={setShow} currentAction={currentAction}>
+
+            </Dialog>
         </div>
     )
 }
