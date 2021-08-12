@@ -1,32 +1,37 @@
 import React, { useState } from 'react'
-import { Table, Button, Image, Modal } from 'react-bootstrap'
+import { Table, Button, Image, Container } from 'react-bootstrap'
 import styled from 'styled-components'
 import { useApi } from '../../hooks/useApi'
 import moment from 'moment'
 import Dialog from './Dialog'
+import PortfolioForm from './PortfolioForm'
 
 const PortfolioList = () => {
     const [action, setAction] = useState({
         del: {
             header: 'Confirm delete?',
             btnVariant: 'danger',
-            btnLabel: 'Confirm'
+            btnLabel: 'Confirm',
+            body: 'Are you sure you want to delete?'
         },
         edit: {
             header: 'Edit portfolio',
             btnVariant: 'primary',
-            btnLabel: 'Save'
+            btnLabel: 'Save',
+            body: <PortfolioForm/>
         },
         add: {
             header: 'Add new portfolio',
             btnVariant: 'primary',
-            btnLabel: 'Save'
+            btnLabel: 'Save',
+            body: <PortfolioForm/>
         }
     })
     const [currentAction, setCurrentAction] = useState({
         header: '',
         btnVariant: '',
-        btnLabel: ''
+        btnLabel: '',
+        body: ''
     })
     const [show, setShow] = useState(false)
     const { data } = useApi('/portfolio')
@@ -35,7 +40,8 @@ const PortfolioList = () => {
         setShow(true)
     }
     return (
-        <div>
+        <Container>
+             <AddNewButton variant="primary" size="lg" onClick={() => handleShow(null, action.add)}>Add new</AddNewButton>{' '}
             <Table striped bordered hover variant="dark">
                 <thead>
                     <tr>
@@ -53,7 +59,7 @@ const PortfolioList = () => {
                             <td>{item.title}</td>
                             <td>{moment(item.createdAt).format('MMM-YYYY')}</td>
                             <td>
-                                <Button variant="info">Edit</Button>
+                                <Button variant="info" onClick={() => handleShow(item.slug, action.edit)}>Edit</Button>
                                 <Button variant="danger" onClick={() => handleShow(item.slug, action.del)}>Delete</Button>
                             </td>
                         </tr>
@@ -62,14 +68,18 @@ const PortfolioList = () => {
                 </tbody>
             </Table>
             <Dialog show={show} setShow={setShow} currentAction={currentAction}>
-
+                    {currentAction.body}
             </Dialog>
-        </div>
+        </Container>
     )
 }
 
 const Logo = styled(Image)`
     height: 100px;
+`
+
+const AddNewButton = styled(Button)`
+    margin-bottom: 1rem;
 `
 
 export default PortfolioList

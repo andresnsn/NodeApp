@@ -51,6 +51,11 @@ const GlobalStyle = createGlobalStyle`
         font-size: 1.4rem;
         line-height: 150%;
     }
+
+    label{
+        color: black;
+        font-weight: bold;
+    }
 `
 
 export default GlobalStyle;
