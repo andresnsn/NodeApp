@@ -5,33 +5,46 @@ import { useApi } from '../../hooks/useApi'
 import moment from 'moment'
 import Dialog from './Dialog'
 import PortfolioForm from './PortfolioForm'
+import { deleteItem, editItem, addItem } from '../../services/api'
 
 const PortfolioList = () => {
+    const handleDel = (slug) => {
+        deleteItem(slug)
+    }
+    const handleAdd = (slug, data) => {
+        addPortfolioItem(data)
+    }
+    const handleEdit = (slug, data) => {
+        editPortfolioItem(slug, data)
+    }
     const[title, setTitle] = useState()
     const [shortDescription, setShortDescription] = useState()
     const [longDescription, setLongDescription] = useState()
     const [image, setImage] = useState()
     const [slug, setSlug] = useState()
+    const [tech, setTech] = useState()
     const [action] = useState({
         del: {
             header: 'Confirm delete?',
             btnVariant: 'danger',
             btnLabel: 'Confirm',
             showBody: true,
-            body: 'Are you sure you want to delete?'
+            body: 'Are you sure you want to delete?',
+            callback: handleDel
         },
         edit: {
             header: 'Edit portfolio',
             btnVariant: 'primary',
             btnLabel: 'Save',
             showBody: false,
+            callback: handleEdit
         },
         add: {
             header: 'Add new portfolio',
             btnVariant: 'primary',
             btnLabel: 'Save',
             showBody: false,
-
+            callback: handleAdd
         }
     })
     const [currentAction, setCurrentAction] = useState({
@@ -45,12 +58,46 @@ const PortfolioList = () => {
     const handleShow = (portfolio, actn) => {
         setCurrentAction(actn)
         setShow(true)
-        setTitle(portfolio.title)
-        setShortDescription(portfolio.description)
-        setLongDescription(portfolio.longDescription)
-        setImage(portfolio.image)
-        setSlug(portfolio.slug)
+        setTitle(portfolio?.title || '')
+        setShortDescription(portfolio?.description || '')
+        setLongDescription(portfolio?.longDescription || '')
+        setImage(portfolio?.image || '')
+        setSlug(portfolio?.slug || '')
+        setTech(portfolio?.technologies || [])
     }
+
+    const addPortfolioItem = (data) => {
+        const tech = data.tech.map(i => {
+            delete i._id
+            return i
+        })
+        const newPortfolioItem = {
+            title: data.title,
+            description: data.shortDescription,
+            longDescription: data.longDescription,
+            image: data.image,
+            technologies: tech
+        }
+
+        addItem(newPortfolioItem)
+    }
+
+    const editPortfolioItem = (slug, data) => {
+        const tech = data.tech.map(i => {
+            delete i._id
+            return i
+        })
+        const editedPortfolioItem = {
+            title: data.title,
+            description: data.shortDescription,
+            longDescription: data.longDescription,
+            image: data.image,
+            technologies: tech
+        }
+    
+        editItem(slug, editedPortfolioItem)
+    }
+
     return (
         <Container>
              <AddNewButton variant="primary" size="lg" onClick={() => handleShow(null, action.add)}>Add new</AddNewButton>{' '}
@@ -66,7 +113,7 @@ const PortfolioList = () => {
                 <tbody>
                     { data?.data?.map(item => {
                         return(
-                            <tr>
+                            <tr key={item.slug}>
                             <td><Logo src={item.image} thumbnail /></td>
                             <td>{item.title}</td>
                             <td>{moment(item.createdAt).format('MMM-YYYY')}</td>
@@ -79,7 +126,7 @@ const PortfolioList = () => {
                     })}
                 </tbody>
             </Table>
-            <Dialog show={show} setShow={setShow} currentAction={currentAction}>
+            <Dialog show={show} setShow={setShow} currentAction={currentAction} slug={slug}>
                     {currentAction.showBody && currentAction.body}
                     {!currentAction.showBody && (
                         <PortfolioForm 
@@ -88,6 +135,7 @@ const PortfolioList = () => {
                         longDescription={longDescription} setLongDescription={setLongDescription}
                         image={image} setImage={setImage}
                         slug={slug}
+                        tech={tech} setTech={setTech}
                         />
                     )}
             </Dialog>

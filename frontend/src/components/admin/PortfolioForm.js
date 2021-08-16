@@ -1,10 +1,30 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import {Form, Container, CardColumns, Card, Button, Col} from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
-const PortfolioForm = ({title, setTitle, shortDescription, setShortDescription, longDescription, setLongDescription, image, setImage, slug}) => {
+const PortfolioForm = ({title, setTitle, shortDescription, setShortDescription, 
+    longDescription, setLongDescription, image, setImage, slug, tech, setTech}) => {
+        const [type, setType] = useState('')
+        const [icon, setIcon] = useState('')
+        const [label, setLabel] = useState('')
+        const handleRemoveItem = (id) => {
+            const newTech = tech.filter(element => element._id !== id)
+            setTech(newTech)
+        }
+
+        const handleAddItem = () => {
+            if(type.length > 0 && label.length > 0 && icon.length > 0) {
+                const newId = Math.random().toString(36).substring(7)
+                const newTech = {
+                    iconType: type,
+                    icon, label,
+                    _id: newId
+                }
+                setTech([...tech, newTech])
+            }
+        }
     return(
         <Container>
             <Form>
@@ -42,58 +62,69 @@ const PortfolioForm = ({title, setTitle, shortDescription, setShortDescription, 
                 </Form.Group>
             </Form>
 
-            <CardColumns>
-                <Card>
-                    <Card.Body>
-                        <Card.Text>
-                            <FontAwesomeIcon icon={['fab', 'github']} size='3x'/> Github
-                        </Card.Text>
-                    </Card.Body>
-                    <Card.Footer>
-                        <Button size="sm" variant='danger'>Remove</Button>
-                    </Card.Footer>
-                </Card>
-                <Card>
-                    <Card.Body>
-                        <Card.Text>
-                            <FontAwesomeIcon icon={['fab', 'github']} size='3x'/> Github
-                        </Card.Text>
-                    </Card.Body>
-                    <Card.Footer>
-                        <Button size="sm" variant='danger'>Remove</Button>
-                    </Card.Footer>
-                </Card>
-                <Card>
-                    <Card.Body>
-                        <Card.Text>
-                            <FontAwesomeIcon icon={['fab', 'github']} size='3x'/> Github
-                        </Card.Text>
-                    </Card.Body>
-                    <Card.Footer>
-                        <Button size="sm" variant='danger'>Remove</Button>
-                    </Card.Footer>
-                </Card>
-            </CardColumns>
+            <CardColumn>
+                {
+                    tech?.map(technology => {
+                        return(
+                            <Card>
+                            <Card.Body>
+                                <Card.Text>
+                                    <FontAwesomeIcon icon={[technology.iconType, technology.icon]} size='3x'/> {technology.label}
+                                </Card.Text>
+                            </Card.Body>
+                            <Card.Footer>
+                                <Button size="sm" variant='danger' onClick={() => handleRemoveItem(technology._id)}>Remove</Button>
+                            </Card.Footer>
+                        </Card>
+                        )
+                    })
+                }
+            </CardColumn>
             <Form inline>
-                <Form.Row>
-                    <Col xs="auto">
-                        <Form.Control placeholder="Type: fab, fas"/>
-                    </Col>
-                    <Col xs="auto">
-                        <Form.Control placeholder="Icon: github, database"/>
-                    </Col>
-                    <Col xs="auto">
-                        <Form.Control placeholder="Label: GitHub, MongoDB"/>
-                    </Col>
-                    <Col xs="auto">
-                        <Button className="mb-2">Add</Button>
-                    </Col>
-                </Form.Row>
+                <FormRow>
+                    <Column xs="auto">
+                        <Form.Control 
+                        placeholder="Type: fab, fas"
+                        value={type}
+                        onChange={(e) => setType(e.target.value)}
+                        />
+                    </Column>
+                    <Column xs="auto">
+                        <Form.Control 
+                        placeholder="Icon: github, database"
+                        value={icon}
+                        onChange={(e) => setIcon(e.target.value)}
+                        />
+                    </Column>
+                    <Column xs="auto">
+                        <Form.Control 
+                        placeholder="Label: GitHub, MongoDB"
+                        value={label}
+                        onChange={(e) => setLabel(e.target.value)}
+                        />
+                    </Column>
+                    <Column xs="auto">
+                        <Button className="mb-2" onClick={handleAddItem}>Add</Button>
+                    </Column>
+                </FormRow>
             </Form>
         </Container>
     )
 }
 
+const FormRow = styled(Form.Row)`
+    display: flex;
+`
 
+const Column = styled(Col)`
+    margin-top: 0.4rem;
+    margin-right: 0.3rem;
+`
+
+const CardColumn = styled(CardColumns)`
+    margin-top: 0.4rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 240px);
+`
 
 export default PortfolioForm
