@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@anymod/core@^0.1.51":
+  version "0.1.51"
+  resolved "https://registry.yarnpkg.com/@anymod/core/-/core-0.1.51.tgz#683614c5331a8b51aaa7418c8f196e74bbadcd34"
+  integrity sha512-4hyrYhnL9VDamXI9YX8YkR3eeuhuyNoyL/LxSBHvyc2D9GE9CKcplTXOjlWPglScEmmnVatHS+Mxd/NX2zIdSw==
+
 "@babel/code-frame@7.10.4":
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.10.4.tgz#168da1a36e90da68ae8d49c0f1b48c7c6249213a"
@@ -2191,6 +2196,22 @@
     "@typescript-eslint/types" "4.15.2"
     eslint-visitor-keys "^2.0.0"
 
+"@userfront/core@^0.2.19":
+  version "0.2.19"
+  resolved "https://registry.yarnpkg.com/@userfront/core/-/core-0.2.19.tgz#bad290f36dcde77d935eb0abd6a46e3ced0b2f92"
+  integrity sha512-5sy8Edxpxx1k+uRVbxKzK59W0Ib7YUedORdJ7ZYexOJYzO3OYhiF/Ga4fpQ8nS+LbDZW9jGjeOqWjl2HaNM+zA==
+  dependencies:
+    axios "^0.21.0"
+    js-cookie "^2.2.1"
+
+"@userfront/react@^0.2.18":
+  version "0.2.18"
+  resolved "https://registry.yarnpkg.com/@userfront/react/-/react-0.2.18.tgz#e840f0817368224f39465141bfa2797a7a03aa18"
+  integrity sha512-ez6k3HtsMAbN5QqqemUMFeQ2J09y93ZNK6LfjQVfsMeaq7SLbqWajnlYDzqRqmXRdT73qSZkpMT6QGozQqJGHA==
+  dependencies:
+    "@anymod/core" "^0.1.51"
+    "@userfront/core" "^0.2.19"
+
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.9.0.tgz#bd850604b4042459a5a41cd7d338cbed695ed964"
@@ -2727,7 +2748,7 @@ axe-core@^4.0.2:
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.1.2.tgz#7cf783331320098bfbef620df3b3c770147bc224"
   integrity sha512-V+Nq70NxKhYt89ArVcaNL9FDryB3vQOd+BFXZIfO3RP6rwtj+2yqqqdHEkacutglPaZLkJeuXKCjCJDMGPtPqg==
 
-axios@^0.21.1:
+axios@^0.21.0, axios@^0.21.1:
   version "0.21.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
   integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
@@ -6956,6 +6977,11 @@ jest@26.6.0:
     import-local "^3.0.2"
     jest-cli "^26.6.0"
 
+js-cookie@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.1.tgz#69e106dc5d5806894562902aa5baec3744e9b2b8"
+  integrity sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==
+
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
@@ -7103,6 +7129,11 @@ jsprim@^1.2.2:
   dependencies:
     array-includes "^3.1.2"
     object.assign "^4.1.2"
+
+jwt-decode@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-3.1.2.tgz#3fb319f3675a2df0c2895c8f5e9fa4b67b04ed59"
+  integrity sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==
 
 killable@^1.0.1:
   version "1.0.1"

@@ -13,6 +13,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import Admin from './pages/Admin'
+import { SignupForm, LoginForm } from './components/auth/Authentication'
 
 
 function App() {
@@ -28,6 +29,8 @@ function App() {
         <Route path = {['/portfolio:id', '/portfolio']} component={Portfolio}/>
         <Route path = "/contact" component={ContactMe}/>
         <Route path = '/admin' component={Admin}/>
+        <Route path = '/signup' component={SignupForm}/>
+        <Route path = '/login' component={LoginForm}/>
       </Switch>
     </div>
   );
