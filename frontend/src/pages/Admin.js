@@ -20,8 +20,11 @@ const Admin = ({location}) => {
         )
     }
 
-    const userData = jwt_decode(Userfront.accessToken())
+    const accessData = jwt_decode(Userfront.accessToken())
+    const userData = jwt_decode(Userfront.idToken())
+    console.log("ACCESS: ", accessData)
     console.log("user: ", userData)
+    const access = JSON.stringify(accessData)
     const user = JSON.stringify(userData)
     
 
@@ -38,7 +41,9 @@ const Admin = ({location}) => {
                 <PortfolioList/>
             </Tab>
             <Tab eventKey="user" title="User">
-                <p>Olá</p>
+                <p>User</p>
+                <p>{access}</p>
+                <p>{user}</p>
             </Tab>
         </Tabs>
     </Container>

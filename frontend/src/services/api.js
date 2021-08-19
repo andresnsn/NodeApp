@@ -1,5 +1,11 @@
 import axios from 'axios'
 
+import Userfront from '@userfront/react'
+Userfront.init("jb7dwvn6")
+
+const accessToken = Userfront.accessToken()
+
+
 const api = axios.create({
     baseURL: '/api'
 })
@@ -8,7 +14,7 @@ export default api
 
 export const deleteItem = (slug) => {
     axios
-    .delete(`/api/portfolio/${slug}`)
+    .delete(`/api/portfolio/${slug}`, {headers: {'Authorization': `Bearer ${accessToken}`}})
     .then(res => {
         console.log("Resultado: ", res)
         return res
